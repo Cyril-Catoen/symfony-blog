@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -30,6 +31,18 @@ class Article
 
     #[ORM\Column]
     private ?bool $isPublished = null;
+
+    public function __construct($title, $description, $content, $image) {
+
+		$this->title = $title;
+		$this->description = $description;
+		$this->content = $content;
+		$this->image = $image;
+
+		$this->createdAt = new \DateTime();
+		$this->isPublished = true;
+
+	}
 
     public function getId(): ?int
     {
@@ -107,4 +120,6 @@ class Article
 
         return $this;
     }
+
+
 }

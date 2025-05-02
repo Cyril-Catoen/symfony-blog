@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController {
 
 	#[Route('/create-article', name: "create-article")]
-	public function displayCreateArticle(Request $request) {
+	public function displayCreateArticle(Request $request, EntityManagerInterface $entityManager)  {
 
         if ($request->isMethod("POST")) {
             $title = $request->request->get('title');
@@ -17,11 +20,12 @@ class ArticleController extends AbstractController {
             $content = $request->request->get('content');
             $image = $request->request->get('image');
     
-            dump($title);
-            dump($description);
-            dump($content);
-            dump($image);
-            die;
+            $article = new Article($title, $description, $content, $image);
+
+            $entityManager->persist($article); // permet d'enregistrer dans la base de données l'article créé
+			$entityManager->flush();
+
+            // $this->addFlash("success", "Article : ". $article->title ." enregistré");;
             }
 
 		return $this->render('create-article.html.twig');
