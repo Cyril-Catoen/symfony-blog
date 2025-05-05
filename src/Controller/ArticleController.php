@@ -88,12 +88,26 @@ class ArticleController extends AbstractController {
 				return $this->redirectToRoute('list-article');
 			}
 		
-			if ($request->isMethod("POST")) {
-				$article->setTitle($request->request->get('title'));
-				$article->setDescription($request->request->get('description'));
-				$article->setContent($request->request->get('content'));
-				$article->setImage($request->request->get('image'));
+			if ($request->isMethod("POST")) { // On récupère les nouvelles données si le formulaire est soumis.
+				
+				// Méthode 1 : set
+				// $article->setTitle($request->request->get('title'));
+				// $article->setDescription($request->request->get('description'));
+				// $article->setContent($request->request->get('content'));
+				// $article->setImage($request->request->get('image'));
 		
+				// $entityManager->flush(); // Enregistre la modification des données
+
+				//Méthode 2 : fonction update créé dans Entity
+
+				$title = $request->request->get('title');
+				$description = $request->request->get('description');
+				$content = $request->request->get('content');
+				$image = $request->request->get('image');
+    
+           	 	$article->update($title, $description, $content, $image);
+
+            	$entityManager->persist($article); // Enregistre dans la base de données l'article créé
 				$entityManager->flush();
 		
 				$this->addFlash('success', 'Article mis à jour avec succès.');

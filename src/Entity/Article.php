@@ -44,6 +44,13 @@ class Article
 
 	}
 
+    public function update($title, $content, $description, $image) {
+        $this->title = $title;
+        $this->content = $content;
+        $this->description = $description;
+        $this->image = $image;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

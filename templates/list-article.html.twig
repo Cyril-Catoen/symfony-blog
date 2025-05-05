@@ -8,7 +8,7 @@
 
 <main>
 
-    <section>
+    <section id="article-order">
 	
 		{% for article in articles %}
 
@@ -19,7 +19,10 @@
 				<p>{{ article.content }}</p>
 				<p>Créé le {{ article.createdAt | date()}}</p>
 				<a href="{{ path('single-article', { 'id': article.id }) }}">Voir cet article</a>
+				<br>
 				<a href="{{ path('delete-article', { 'id': article.id }) }}">Supprimer cet article</a>
+				<br>
+				<a href="{{ path('update-article', { 'id': article.id }) }}">Mettre à jour cet article</a>
 			</article>
 
 		{% endfor %}
