@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +32,19 @@ class ArticleController extends AbstractController {
 		return $this->render('create-article.html.twig');
 	}
 
+    #[Route('/list-article', name: 'list-article')]
+	public function displayListArticles(ArticleRepository $articleRepository) {
+
+		// permet de faire une requête SQL SELECT * sur la table article
+		$articles = $articleRepository->findAll();
+
+		return $this->render('list-article.html.twig', [
+			'articles' => $articles
+		]);
+
+
+		
+	}
 }
 
 ?>
