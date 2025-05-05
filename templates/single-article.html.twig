@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>List articles</title>
+</head>
+<body>
+
+<main>
+
+    <section>
+			<article>
+				<p>{{ articles.title }}</p>
+				<p>{{ articles.description }}</p>
+				<img src="{{ articles.image }}" alt="{{ articles.title }}" />
+				<p>{{ articles.content }}</p>
+				<p>Créé le {{ articles.createdAt | date()}}</p>
+			</article>
+	</section>
+
+
+
+</main>
+	
+</body>
+</html>

@@ -41,8 +41,18 @@ class ArticleController extends AbstractController {
 		return $this->render('list-article.html.twig', [
 			'articles' => $articles
 		]);
+		
+	}
 
+    #[Route('/single-article/{id}', name: 'single-article')]
+	public function displaySingleArticles(ArticleRepository $articleRepository, $id) {
 
+		// permet de faire une requête SQL SELECT * sur la table article et de sélectionner un item par ID
+		$articles = $articleRepository->findOneById($id);
+
+		return $this->render('single-article.html.twig', [
+			'articles' => $articles
+		]);
 		
 	}
 }
