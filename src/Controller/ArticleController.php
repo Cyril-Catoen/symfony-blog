@@ -59,8 +59,25 @@ class ArticleController extends AbstractController {
 		return $this->render('single-article.html.twig', [
 			'article' => $article
 		]);
-		
 	}
-}
+
+	#[Route('/delete-article/{id}', name: "delete-article")]
+	public function deleteArticle($id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager) 
+		{
+			// On cible l'article à supprimer par son id unique.
+			$article = $articleRepository->find($id);
+	
+			// On utilise la méthode remove de la classe EntityManager 
+			// On prend en paramètre l'article à supprimer
+			$entityManager->remove($article);
+			$entityManager->flush();
+	
+			// On ajoute un message flash pour notifier que l'article est supprimé
+			$this->addFlash('success', 'The article has been deleted');
+	
+			// On redirige vers la page de liste mis à jour
+			return $this->redirectToRoute('list-article');
+		}	
+	}
 
 ?>
