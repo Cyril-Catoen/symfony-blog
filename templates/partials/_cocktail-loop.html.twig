@@ -1,0 +1,17 @@
+<div id="article-order">
+    {% for cocktail in cocktails %}
+
+        <article class="list-articles article">
+
+            <h2>{{ cocktail.nom }}</h2>
+            <div class="cocktail-card"><img src="{{ asset(cocktail.image) }}" alt="Photo de {{ cocktail.nom }}" /></div>
+            <p>Ingrédients :<ul>{% for ingredient in cocktail.ingredients %} <li>{{ ingredient }}</li>{% endfor %}</ul>
+            </p>
+            <p>{{ cocktail.description }}</p>
+            <p>{{ cocktail.date_creation | date('d-m-Y')}}</p>
+            <a href="{{ path('single-cocktail', { 'id': cocktail.id }) }}">Voir ce cocktail</a>	
+
+        </article>
+
+    {% endfor %}
+</div>

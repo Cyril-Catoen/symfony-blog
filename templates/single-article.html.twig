@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>List articles</title>
-</head>
-<body>
+{% extends 'base.html.twig' %}
 
+        {% block metatitle %}
+        <title>Single-article</title>
+        {% endblock metatitle %}
+
+{% block main %}
 <main>
 
     <section>
 			<article>
-				<p>{{ articles.title }}</p>
-				<p>{{ articles.description }}</p>
-				<img src="{{ articles.image }}" alt="{{ articles.title }}" />
-				<p>{{ articles.content }}</p>
-				<p>Créé le {{ articles.createdAt | date()}}</p>
+				<p>{{ article.title }}</p>
+				<p>{{ article.description }}</p>
+				<img src="{{ article.image }}" alt="{{ article.title }}" />
+				<p>{{ article.content }}</p>
+				<p>Créé le {{ article.createdAt | date()}}</p>
 			</article>
 	</section>
 
 
 
 </main>
-	
-</body>
-</html>
+{% endblock main %}
