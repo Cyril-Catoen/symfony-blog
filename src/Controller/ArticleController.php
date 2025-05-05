@@ -50,6 +50,12 @@ class ArticleController extends AbstractController {
 		// permet de faire une requête SQL SELECT * sur la table article et de sélectionner un item par ID
 		$article = $articleRepository->find($id);
 
+		// Si l'id demandé ne correspond à aucun article
+		// Alors l'utilisateur est redirigé vers une page d'erreur 404.
+		// Sinon l'article avec l'id correspond est affiché.
+		if (!$article) {
+			return $this->redirectToRoute('404');
+		}
 		return $this->render('single-article.html.twig', [
 			'article' => $article
 		]);
