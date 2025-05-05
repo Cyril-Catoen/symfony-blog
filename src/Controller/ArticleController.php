@@ -78,6 +78,31 @@ class ArticleController extends AbstractController {
 			// On redirige vers la page de liste mis à jour
 			return $this->redirectToRoute('list-article');
 		}	
+
+		#[Route('/update-article/{id}', name: "update-article")]
+		public function updateArticle($id, Request $request, ArticleRepository $articleRepository, EntityManagerInterface $entityManager) {
+			$article = $articleRepository->find($id);
+		
+			if (!$article) {
+				$this->addFlash('error', 'Article non trouvé.');
+				return $this->redirectToRoute('list-article');
+			}
+		
+			if ($request->isMethod("POST")) {
+				$article->setTitle($request->request->get('title'));
+				$article->setDescription($request->request->get('description'));
+				$article->setContent($request->request->get('content'));
+				$article->setImage($request->request->get('image'));
+		
+				$entityManager->flush();
+		
+				$this->addFlash('success', 'Article mis à jour avec succès.');
+		
+				return $this->redirectToRoute('list-article');
+			}
+		
+			return $this->render('update-article.html.twig', ['article' => $article]);
+		}
 	}
 
 ?>

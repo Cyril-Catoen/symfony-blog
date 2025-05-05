@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+        {% block metatitle %}
+        <title>Update-article</title>
+        {% endblock metatitle %}
+
+{% block main %}
+<main>
+
+     <section>
+			<article>
+				<p>{{ article.title }}</p>
+				<p>{{ article.description }}</p>
+				<img src="{{ article.image }}" alt="{{ article.title }}" />
+				<p>{{ article.content }}</p>
+				<p>Créé le {{ article.createdAt | date()}}</p>	
+			</article>
+	</section>
+
+	<h1>Mettre à jour un article</h1>
+	<form action="" method="POST">
+
+		<label>Title
+			<input type="text" name="title">
+		</label>
+
+
+		<label>Description
+			<input type="text" name="description">
+		</label>
+
+		<label>Content
+			<textarea name="content"></textarea>
+		</label>
+
+		<label>Image
+			<input type="text" name="image">
+		</label>
+
+		<input type="submit">
+	</form>
+
+</main>
+{% endblock main %}
