@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,13 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController {
 
 	#[Route('/create-article', name: "create-article")]
-	public function displayCreateArticle(Request $request, EntityManagerInterface $entityManager)  {
+	public function displayCreateArticle(Request $request, categoryRepository $categoryRepository, EntityManagerInterface $entityManager)  {
 
         if ($request->isMethod("POST")) {
             $title = $request->request->get('title');
             $description = $request->request->get('description');
             $content = $request->request->get('content');
             $image = $request->request->get('image');
+			// $categoryId = $request->request->get('category_id');
+			// $category = 
     
             $article = new Article($title, $description, $content, $image);
 
@@ -29,7 +32,9 @@ class ArticleController extends AbstractController {
             // $this->addFlash("success", "Article : ". $article->title ." enregistré");;
             }
 
-		return $this->render('create-article.html.twig');
+		$categories = $categoryRepository->findAll(); // On récupère l'ensemble des catégories du repository
+
+		return $this->render('create-article.html.twig', ['categories' => $categories]); // on affiche la vue et lui communique les données récupérées dans le repository Category
 	}
 
     #[Route('/list-article', name: 'list-article')]

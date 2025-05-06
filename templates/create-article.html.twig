@@ -27,6 +27,12 @@
 			<input type="text" name="image">
 		</label>
 
+		<select name="category">
+
+			{% for category in categories %}
+				<option value="{{ category.id }}">{{ category.title}}</option>
+			{% endfor %}
+
 		<input type="submit">
 	</form>
 
