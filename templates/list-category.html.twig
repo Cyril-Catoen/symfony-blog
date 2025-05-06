@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+        {% block metatitle %}
+        <title>List-category</title>
+        {% endblock metatitle %}
+
+{% block main %}
+
+<main>
+
+    <section id="article-order">
+	
+		{% for category in categorys %}
+
+			<article style="background-color: grey">
+				<h2>{{ category.title }}</h2>
+				<p>{{ category.description }}</p>
+				<p style="color: {{ category.color }}">{{ category.color }}</p>
+				<p>Créé le {{ category.createdAt | date()}}</p>
+				<a href="{{ path('single-category', { 'id': category.id }) }}">Voir cette categorie</a>
+				<br>
+			</article>
+
+		{% endfor %}
+
+	</section>
+
+</main>
+{% endblock main %}
