@@ -70,6 +70,30 @@ class CategoryController extends AbstractController {
 		]);
 	}
 
+    #[Route('/update-category/{id}', name: "update-category")]
+    public function updateCategory($id, Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager) {
+        $category = $categoryRepository->find($id);
+        $categoryForm = $this->createForm(CategoryForm::class, $category);
+        $categoryForm->handleRequest($request);
+    
+        if (!$category) {
+            $this->addFlash('error', 'Category non trouvée.');
+            return $this->redirectToRoute('list-category');
+        }
+    
+        if ($categoryForm->isSubmitted()) {
+			$entityManager->persist($category);
+			$entityManager->flush();
+    
+            $this->addFlash('success', 'Category mis à jour avec succès.');
+    
+            return $this->redirectToRoute('list-category');
+        }
+    
+        return $this->render('update-category.html.twig', [
+			'categoryForm' => $categoryForm->createView(), 'category' => $category,
+		]);
+    }
 
 	}
 
