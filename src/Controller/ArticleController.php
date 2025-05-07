@@ -21,10 +21,15 @@ class ArticleController extends AbstractController {
             $description = $request->request->get('description');
             $content = $request->request->get('content');
             $image = $request->request->get('image');
-			// $categoryId = $request->request->get('category_id');
-			// $category = 
-    
-            $article = new Article($title, $description, $content, $image);
+    		// On récupère l'id de la catégorie sélectionné par l'utilisateur
+			$categoryId = $request->request->get('category');
+			// On récupère la catégorie complète liée à l'id récupéré (grâce à la classe CategoryRepository)
+			$category = $categoryRepository->find($categoryId);
+ 
+			// La catégorie est envoyée dans le constructeur de l'entité Article
+			// pour que la catégorie soit enregistrée dans l'article
+			$article = new Article($title, $content, $description, $image, $category);
+	
 
             $entityManager->persist($article); // permet d'enregistrer dans la base de données l'article créé
 			$entityManager->flush();
@@ -38,14 +43,14 @@ class ArticleController extends AbstractController {
 	}
 
     #[Route('/list-article', name: 'list-article')]
-	public function displayListArticles(ArticleRepository $articleRepository) {
+	public function displayListArticles(ArticleRepository $articleRepository, categoryRepository $categoryRepository) {
 
 		// permet de faire une requête SQL SELECT * sur la table article
 		$articles = $articleRepository->findAll();
+		$categories = $categoryRepository->findAll(); 
 
 		return $this->render('list-article.html.twig', [
-			'articles' => $articles
-		]);
+			'articles' => $articles, 'categories' => $categories]);
 		
 	}
 

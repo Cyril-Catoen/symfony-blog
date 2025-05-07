@@ -35,12 +35,13 @@ class Article
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?Category $category = null;
 
-    public function __construct($title, $description, $content, $image) {
+    public function __construct($title, $description, $content, $image, $category) {
 
 		$this->title = $title;
 		$this->description = $description;
 		$this->content = $content;
 		$this->image = $image;
+        $this->category = $category;
 
 		$this->createdAt = new \DateTime();
 		$this->isPublished = true;

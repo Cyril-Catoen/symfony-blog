@@ -8,25 +8,27 @@
 
 <main>
 
-    <section id="article-order">
-	
+	<section id="article-order">
 		{% for article in articles %}
-
 			<article>
 				<p>{{ article.title }}</p>
 				<p>{{ article.description }}</p>
 				<img src="{{ article.image }}" alt="{{ article.title }}" />
 				<p>{{ article.content }}</p>
-				<p>Créé le {{ article.createdAt | date()}}</p>
+
+				<!-- Affichage de la catégorie associée à l'article -->
+				{% if article.category %}
+					<p style="color: {{ article.category.color }}">{{ article.category.title }}</p>
+				{% endif %}
+				
+				<p>Créé le {{ article.createdAt | date() }}</p>
 				<a href="{{ path('single-article', { 'id': article.id }) }}">Voir cet article</a>
 				<br>
 				<a href="{{ path('delete-article', { 'id': article.id }) }}">Supprimer cet article</a>
 				<br>
 				<a href="{{ path('update-article', { 'id': article.id }) }}">Mettre à jour cet article</a>
 			</article>
-
 		{% endfor %}
-
 	</section>
 
 	<!-- <h1>All articles :</h1> -->
